@@ -7,6 +7,7 @@ module Onion.HTML
 , unsafeProp
 
 , button
+, div
 
 , onclick
 ) where
@@ -33,6 +34,9 @@ unsafeProp = _unsafeProp
 
 button :: forall eff. Array (Prop eff) -> Array (HTML eff) -> HTML eff
 button = element "button"
+
+div :: forall eff. Array (Prop eff) -> Array (HTML eff) -> HTML eff
+div = element "div"
 
 --------------------------------------------------------------------------------
 -- Properties ------------------------------------------------------------------
