@@ -1,0 +1,7 @@
+{
+  "name": "purescript-onion",
+  "dependencies": {
+    "purescript-eff": "^1.0.0",
+    "purescript-prelude": "^1.0.1"
+  }
+}
