@@ -5,21 +5,25 @@ module Main
 import Data.Array as Array
 import Data.Map as Map
 import Control.Monad.Eff (Eff)
-import Data.Lens (iso, IsoP, (^.), LensP)
+import Data.Lens ((%~), (^.), iso, IsoP, lens, LensP)
 import Data.Lens.At (at)
 import Data.Map (Map)
 import Data.Maybe (fromMaybe, Maybe(Just, Nothing))
 import Onion (Component, run)
-import Onion.HTML (div, text, textInput)
+import Onion.HTML (checkboxInput, checked, div, em, onchange, text, textInput)
 import Prelude hiding (div)
 
 data Item = Item Boolean String
 derive instance eqItem :: Eq Item
 
+_done :: LensP Item Boolean
+_done = lens (\(Item d _) -> d) (\(Item _ t) d -> Item d t)
+
 type ItemState = Item
 item :: forall eff s. LensP s ItemState -> Component eff s
-item l s u = case s ^. l of
-  Item done description -> div [] [text (show done), text description]
+item l s u = case s ^. l of Item done description -> div [] [checkbox done, descriptionH done description]
+  where checkbox done = checkboxInput ([onchange (u (l <<< _done %~ not))] <> if done then [checked] else [])
+        descriptionH done description = (if done then \x -> em [] [x] else id) (text description)
 
 type AppState = Map Int Item
 app :: forall eff s. LensP s AppState -> Component eff s

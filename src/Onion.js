@@ -14,7 +14,7 @@ exports._run = function(initialState) {
       var refresh = function() {
         var tree_ = component(state)(function(state_) {
           return function() {
-            state = state_;
+            state = state_(state);
             refresh();
           };
         });

@@ -7,9 +7,13 @@ module Onion.HTML
 , unsafeProp
 
 , button
+, checkboxInput
 , div
+, em
 , textInput
 
+, checked
+, onchange
 , onclick
 ) where
 
@@ -36,8 +40,14 @@ unsafeProp = _unsafeProp
 button :: forall eff. Array (Prop eff) -> Array (HTML eff) -> HTML eff
 button = element "button"
 
+checkboxInput :: forall eff. Array (Prop eff) -> HTML eff
+checkboxInput ps = element "input" (ps <> [unsafeProp "type" "checkbox"]) []
+
 div :: forall eff. Array (Prop eff) -> Array (HTML eff) -> HTML eff
 div = element "div"
+
+em :: forall eff. Array (Prop eff) -> Array (HTML eff) -> HTML eff
+em = element "em"
 
 textInput :: forall eff. Array (Prop eff) -> HTML eff
 textInput ps = element "input" (ps <> [unsafeProp "type" "text"]) []
@@ -45,6 +55,12 @@ textInput ps = element "input" (ps <> [unsafeProp "type" "text"]) []
 --------------------------------------------------------------------------------
 -- Properties ------------------------------------------------------------------
 --------------------------------------------------------------------------------
+
+checked :: forall eff. Prop eff
+checked = unsafeProp "checked" "checked"
+
+onchange :: forall eff. Eff eff Unit -> Prop eff
+onchange = unsafeProp "onchange"
 
 onclick :: forall eff. Eff eff Unit -> Prop eff
 onclick = unsafeProp "onclick"
