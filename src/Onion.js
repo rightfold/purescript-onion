@@ -1,22 +1,9 @@
 'use strict';
 
 var VirtualDOM = {
-  h: require('virtual-dom/h'),
   diff: require('virtual-dom/diff'),
   patch: require('virtual-dom/patch'),
   createElement: require('virtual-dom/create-element'),
-};
-
-exports._h = function(element) {
-  return function(properties) {
-    return function(children) {
-      return VirtualDOM.h(element, properties, children);
-    };
-  };
-};
-
-exports._t = function(text) {
-  return text;
 };
 
 exports._run = function(initialState) {
