@@ -1,15 +1,15 @@
 module Onion
-( run
+( Component
+, run
 ) where
 
 import Control.Monad.Eff (Eff)
 import Onion.HTML (HTML)
 import Prelude
 
-run :: forall eff state
-     . state
-    -> (state -> (state -> Eff eff Unit) -> HTML eff)
-    -> Eff eff Unit
+type Component eff s = s -> (s -> Eff eff Unit) -> HTML eff
+
+run :: forall eff s. s -> Component eff s -> Eff eff Unit
 run = _run
 
-foreign import _run :: forall eff state. state -> (state -> (state -> Eff eff Unit) -> HTML eff) -> Eff eff Unit
+foreign import _run :: forall eff s. s -> Component eff s -> Eff eff Unit
