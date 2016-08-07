@@ -8,6 +8,7 @@ module Onion.HTML
 
 , button
 , div
+, textInput
 
 , onclick
 ) where
@@ -37,6 +38,9 @@ button = element "button"
 
 div :: forall eff. Array (Prop eff) -> Array (HTML eff) -> HTML eff
 div = element "div"
+
+textInput :: forall eff. Array (Prop eff) -> HTML eff
+textInput ps = element "input" (ps <> [unsafeProp "type" "text"]) []
 
 --------------------------------------------------------------------------------
 -- Properties ------------------------------------------------------------------
